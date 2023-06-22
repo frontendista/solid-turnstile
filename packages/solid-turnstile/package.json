@@ -1,0 +1,25 @@
+{
+  "name": "@frontendista/solid-turnstile",
+  "version": "0.1.0",
+  "description": "SolidJS component for rendering Cloudflare's turnstile widget",
+  "scripts": {
+    "build": "echo TODO"
+  },
+  "devDependencies": {
+    "solid-js": "^1.7.6",
+    "turnstile-types": "^1.1.2"
+  },
+  "peerDependencies": {
+    "solid-js": "^1.7.6"
+  },
+  "author": {
+    "email": "me@frontendista.cz",
+    "name": "Pavel Sušický",
+    "url": "https://frontendista.cz"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/frontendista/solid-turnstile"
+  },
+  "license": "MIT"
+}
