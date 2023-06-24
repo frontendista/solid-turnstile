@@ -10,25 +10,7 @@ import {
   type VoidComponent,
 } from "solid-js";
 
-type TurnstileProps = {
-  siteKey: string;
-  /**
-   * @default "onLoadTurnstileCallback"
-   */
-  onLoadCallbackName?: string;
-  /**
-   * onSuccess is called when the challenge is successfully solved.
-   */
-  onSuccess?: (token: string) => void;
-  /**
-   * onError is called when an error occurs during the challenge or connecting to Turnstile.
-   */
-  onError?: () => void;
-  /**
-   * onExpire is called when token issued by successful challenge expires.
-   */
-  onExpire?: () => void;
-};
+import type { TurnstileProps } from "./index.d";
 
 const TURNSTILE_URL = "https://challenges.cloudflare.com/turnstile/v0/api.js";
 
@@ -58,7 +40,7 @@ function injectScript(callback: string) {
 }
 
 /**
- * Explicetely renders Turnstile widget.
+ * Explicitly renders Turnstile widget.
  *
  * @returns
  */

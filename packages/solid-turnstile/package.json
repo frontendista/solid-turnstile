@@ -3,14 +3,23 @@
   "version": "0.1.0",
   "description": "SolidJS component for rendering Cloudflare's turnstile widget",
   "scripts": {
-    "build": "echo TODO"
+    "build": "vite build"
+  },
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "solid-js": "^1.7.6"
   },
   "devDependencies": {
     "solid-js": "^1.7.6",
-    "turnstile-types": "^1.1.2"
-  },
-  "peerDependencies": {
-    "solid-js": "^1.7.6"
+    "turnstile-types": "^1.1.2",
+    "vite": "^4.3.9",
+    "vite-plugin-dts": "^2.3.0",
+    "vite-plugin-solid": "^2.7.0"
   },
   "author": {
     "email": "me@frontendista.cz",
