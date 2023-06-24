@@ -17,6 +17,6 @@
         ]
     },
     "include": [
-        "packages/solid-turnstile/src"
+        "src/**/*.tsx"
     ]
 }

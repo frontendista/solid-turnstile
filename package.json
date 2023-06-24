@@ -1,5 +1,8 @@
 {
   "scripts": {
     "dev": "echo hi"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.3"
   }
 }
