@@ -86,7 +86,7 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
   );
 
   return (
-    <Show when={turnStileState()}>
+    <Show when={turnStileState() === "loaded"}>
       <div ref={element!} />
     </Show>
   );
