@@ -1,18 +1,25 @@
 {
   "private": true,
   "name": "playground",
-  "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build"
   },
   "dependencies": {
     "solid-js": "^1.7.6"
   },
   "devDependencies": {
-    "vite": "^4.3.9",
+    "@storybook/addon-essentials": "7.0.23",
+    "@storybook/addon-interactions": "7.0.23",
+    "@storybook/addon-links": "7.0.23",
+    "@storybook/blocks": "7.0.23",
+    "@storybook/testing-library": "0.0.14-next.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "storybook": "7.0.23",
+    "storybook-solidjs": "1.0.0-beta.2",
+    "storybook-solidjs-vite": "1.0.0-beta.2",
     "vite-plugin-solid": "^2.7.0"
   }
 }
