@@ -1,5 +1,6 @@
 import {
   createEffect,
+  createMemo,
   createSignal,
   mergeProps,
   on,
@@ -32,7 +33,12 @@ function injectScript(callback: string) {
   script.id = "cf-turnstile";
 
   // @ts-expect-error
-  window[callback] = () => setState("loaded");
+  window[callback] = () => {
+    setState("loaded");
+
+    // @ts-expect-error
+    delete window[callback];
+  };
 
   script.onerror = () => setState("error");
 
@@ -45,9 +51,8 @@ function injectScript(callback: string) {
  * @returns
  */
 export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
-  let element: HTMLDivElement;
-  let [widgetId, setWidgetId] = createSignal<string | undefined>();
   let [retryId, setRetryId] = createSignal<number | undefined>();
+  let [ref, setRef] = createSignal<HTMLDivElement>();
 
   const [local, attributes] = splitProps(props, [
     "siteKey",
@@ -81,43 +86,18 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
 
   onMount(() => injectScript(cf.onLoadCallbackName));
 
-  createEffect(() => {
-    if (props.actions) {
-      props.actions({
-        getResponse() {
-          return window.turnstile.getResponse(widgetId());
-        },
-        remove() {
-          window.turnstile.remove(widgetId());
-        },
-        reset() {
-          window.turnstile.reset(widgetId());
-        },
-      });
-    }
-  });
-
-  createEffect(
-    on(turnStileState, () => {
-      if (!window.turnstile) return;
+  const widgetId = createMemo(
+    on([ref, turnStileState], ([element]) => {
+      if (typeof window === "undefined" || !window.turnstile || !element)
+        return;
 
       const id = window.turnstile.render(element, {
         sitekey: cf.siteKey,
         callback: cf.onSuccess,
-        "error-callback": () => {
-          if (cf.retry === "auto") {
-            setRetryId(
-              setTimeout(() => {
-                window.turnstile.reset(id);
-              }, cf.retryInterval)
-            );
-          }
-
-          cf.onError?.();
-        },
+        retry: "never",
+        "error-callback": onErrorCallback,
         "expired-callback": cf.onExpire,
         "timeout-callback": cf.onTimeout,
-        retry: "never",
         "retry-interval": cf.retryInterval,
         "refresh-expired": cf.refreshExpired,
         "response-field": cf.responseField,
@@ -127,22 +107,55 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
         action: cf.action,
       });
 
-      if (!id) {
-        cf.onError?.();
+      if (!id && cf.onError) {
+        cf.onError();
       }
 
-      setWidgetId(id);
-
-      onCleanup(() => {
-        window.clearTimeout(retryId());
-        window.turnstile.remove(id);
-      });
+      return id;
     })
   );
 
+  const onErrorCallback = () => {
+    // NOTE: This is a fix until automatic retry is fixed.
+    // https://community.cloudflare.com/t/window-turnstile-remove-with-retry-set-to-auto-doesnt-cleartimeout/525530
+    if (cf.retry === "auto") {
+      setRetryId(
+        setTimeout(() => {
+          window.turnstile.reset(widgetId());
+        }, cf.retryInterval)
+      );
+    }
+
+    cf.onError?.();
+  };
+
+  onCleanup(() => {
+    clearTimeout(retryId());
+
+    if (widgetId()) {
+      window.turnstile.remove(widgetId());
+    }
+  });
+
+  createEffect(() => {
+    if (!props.actions) return;
+
+    props.actions({
+      getResponse() {
+        return window.turnstile.getResponse(widgetId());
+      },
+      remove() {
+        window.turnstile.remove(widgetId());
+      },
+      reset() {
+        window.turnstile.reset(widgetId());
+      },
+    });
+  });
+
   return (
     <Show when={turnStileState() === "loaded"}>
-      <div ref={element!} />
+      <div ref={setRef} />
     </Show>
   );
 };

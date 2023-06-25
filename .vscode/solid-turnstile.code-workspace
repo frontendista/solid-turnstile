@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "✨ root",
+			"path": "../"
+		},
+		{
+			"name": "📦 @frontendista/solid-turnstile",
+			"path": "../packages/solid-turnstile"
+		}
+	],
+	"settings": {}
+}
