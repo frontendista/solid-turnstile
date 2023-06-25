@@ -9,7 +9,6 @@ export type TurnstileProps = {
      * @default "onLoadTurnstileCallback"
      */
     onLoadCallbackName?: string;
-
     /**
      * retry controls whether the widget should automatically retry to obtain a token if it did not succeed.
      * 
@@ -45,6 +44,14 @@ export type TurnstileProps = {
      * @default "auto"
      */
     theme?: "light" | "dark" | "auto"
+    /**
+     * @link https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#configurations
+     */
+    action?: string
+    /**
+     * @link https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#configurations
+     */
+    cData?: string
 } & TurnstileCallbacks;
 
 export type TurnstileCallbacks = {
