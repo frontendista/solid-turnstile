@@ -22,6 +22,10 @@ export type TurnstileProps = {
      */
     onExpire?: () => void;
     /**
+     * onTimeout is called when challenge expires
+     */
+    onTimeout?: () => void;
+    /**
      * retry controls whether the widget should automatically retry to obtain a token if it did not succeed.
      * 
      * @default "auto"
