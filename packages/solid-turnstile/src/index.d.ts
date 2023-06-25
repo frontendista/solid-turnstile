@@ -9,22 +9,7 @@ export type TurnstileProps = {
      * @default "onLoadTurnstileCallback"
      */
     onLoadCallbackName?: string;
-    /**
-     * onSuccess is called when the challenge is successfully solved.
-     */
-    onSuccess?: (token: string) => void;
-    /**
-     * onError is called when an error occurs during the challenge or connecting to Turnstile.
-     */
-    onError?: () => void;
-    /**
-     * onExpire is called when token issued by successful challenge expires.
-     */
-    onExpire?: () => void;
-    /**
-     * onTimeout is called when challenge expires
-     */
-    onTimeout?: () => void;
+
     /**
      * retry controls whether the widget should automatically retry to obtain a token if it did not succeed.
      * 
@@ -56,4 +41,30 @@ export type TurnstileProps = {
      * @default "cf-turnstile-response"
      */
     responseFieldName?: string
-};
+    /**
+     * @default "auto"
+     */
+    theme?: "light" | "dark" | "auto"
+} & TurnstileCallbacks;
+
+export type TurnstileCallbacks = {
+    /**
+     * onSuccess is called when the challenge is successfully solved.
+     * 
+     * @param token The token to be validated on the server.
+     * @returns 
+     */
+    onSuccess?: (token: string) => void;
+    /**
+     * onError is called when an error occurs during the challenge or connecting to Turnstile.
+     */
+    onError?: () => void;
+    /**
+     * onExpire is called when token issued by successful challenge expires.
+     */
+    onExpire?: () => void;
+    /**
+     * onTimeout is called when challenge expires
+     */
+    onTimeout?: () => void;
+}

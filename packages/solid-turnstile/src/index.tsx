@@ -61,12 +61,14 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
     "responseField",
     "responseFieldName",
     "onTimeout",
+    "theme",
   ]);
 
   const cf = mergeProps(
     {
       onLoadCallbackName: "onLoadTurnstileCallback",
       retryInterval: 6000,
+      theme: "auto" as const,
       retry: "auto" as const,
       refreshExpired: "auto" as const,
       responseField: true,
@@ -101,6 +103,7 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
         "refresh-expired": cf.refreshExpired,
         "response-field": cf.responseField,
         "response-field-name": cf.responseFieldName,
+        theme: cf.theme,
       });
 
       if (!id) {
