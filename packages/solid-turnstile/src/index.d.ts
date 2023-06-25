@@ -21,4 +21,23 @@ export type TurnstileProps = {
      * onExpire is called when token issued by successful challenge expires.
      */
     onExpire?: () => void;
+    /**
+     * retry controls whether the widget should automatically retry to obtain a token if it did not succeed.
+     * 
+     * @default "auto"
+     */
+    retry?: "auto" | "never";
+    /**
+     * retryInterval controls the duration between retries in milliseconds when `retry` is set to `auto`.
+     * 
+     * @default 6000
+     */
+    retryInterval?: number
+    /**
+     * refreshExpired controls whether the widget should automatically refresh an expired token.
+     * 
+     * @default "auto"
+     * @link https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#refreshing-a-widget
+     */
+    refreshExpired?: "auto" | "manual" | "never"
 };

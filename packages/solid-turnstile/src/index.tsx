@@ -47,6 +47,7 @@ function injectScript(callback: string) {
 export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
   let element: HTMLDivElement;
   let [widgetId, setWidgetId] = createSignal<string | null>(null);
+  let [retryId, setRetryId] = createSignal<number | undefined>(undefined);
 
   const [local, attributes] = splitProps(props, [
     "siteKey",
@@ -54,10 +55,16 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
     "onSuccess",
     "onError",
     "onExpire",
+    "retry",
+    "retryInterval",
+    "refreshExpired",
   ]);
 
   const cf = mergeProps(local, {
     onLoadCallbackName: "onLoadTurnstileCallback",
+    retryInterval: 6000,
+    retry: "auto" as const,
+    refreshExpired: "auto" as const,
   });
 
   onMount(() => injectScript(cf.onLoadCallbackName));
@@ -69,8 +76,20 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
       const id = window.turnstile.render(element, {
         sitekey: cf.siteKey,
         callback: cf.onSuccess,
-        "error-callback": cf.onError,
+        "error-callback": () => {
+          if (cf.retry === "auto") {
+            setRetryId(
+              setTimeout(() => {
+                window.turnstile.reset(id);
+              }, cf.retryInterval)
+            );
+          }
+
+          cf.onError?.();
+        },
         "expired-callback": cf.onExpire,
+        retry: "never",
+        "refresh-expired": cf.refreshExpired,
       });
 
       if (!id) {
@@ -80,6 +99,7 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
       setWidgetId(id);
 
       onCleanup(() => {
+        window.clearTimeout(retryId());
         window.turnstile.remove(id);
       });
     })
