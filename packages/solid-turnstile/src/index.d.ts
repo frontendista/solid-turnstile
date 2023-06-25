@@ -40,4 +40,16 @@ export type TurnstileProps = {
      * @link https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#refreshing-a-widget
      */
     refreshExpired?: "auto" | "manual" | "never"
+    /**
+     * responseField controls whether the widget should automatically add a hidden input field with the token value.
+     * 
+     * @default true
+     */
+    responseField?: boolean
+    /**
+     * responseFieldName controls name of the input field when responseField is set to `true`
+     * 
+     * @default "cf-turnstile-response"
+     */
+    responseFieldName?: string
 };

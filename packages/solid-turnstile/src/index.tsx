@@ -58,14 +58,21 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
     "retry",
     "retryInterval",
     "refreshExpired",
+    "responseField",
+    "responseFieldName",
   ]);
 
-  const cf = mergeProps(local, {
-    onLoadCallbackName: "onLoadTurnstileCallback",
-    retryInterval: 6000,
-    retry: "auto" as const,
-    refreshExpired: "auto" as const,
-  });
+  const cf = mergeProps(
+    {
+      onLoadCallbackName: "onLoadTurnstileCallback",
+      retryInterval: 6000,
+      retry: "auto" as const,
+      refreshExpired: "auto" as const,
+      responseField: true,
+      responseFieldName: "cf-turnstile-response",
+    },
+    local
+  );
 
   onMount(() => injectScript(cf.onLoadCallbackName));
 
@@ -90,6 +97,8 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
         "expired-callback": cf.onExpire,
         retry: "never",
         "refresh-expired": cf.refreshExpired,
+        "response-field": cf.responseField,
+        "response-field-name": cf.responseFieldName,
       });
 
       if (!id) {
