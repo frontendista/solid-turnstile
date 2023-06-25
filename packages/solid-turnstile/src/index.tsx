@@ -10,7 +10,7 @@ import {
   type VoidComponent,
 } from "solid-js";
 
-import type { TurnstileProps } from "./index.d";
+import type { TurnstileProps } from "./types";
 
 const TURNSTILE_URL = "https://challenges.cloudflare.com/turnstile/v0/api.js";
 
@@ -46,8 +46,8 @@ function injectScript(callback: string) {
  */
 export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
   let element: HTMLDivElement;
-  let [widgetId, setWidgetId] = createSignal<string | null>(null);
-  let [retryId, setRetryId] = createSignal<number | undefined>(undefined);
+  let [widgetId, setWidgetId] = createSignal<string | undefined>();
+  let [retryId, setRetryId] = createSignal<number | undefined>();
 
   const [local, attributes] = splitProps(props, [
     "siteKey",
@@ -80,6 +80,22 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
   );
 
   onMount(() => injectScript(cf.onLoadCallbackName));
+
+  createEffect(() => {
+    if (props.actions) {
+      props.actions({
+        getResponse() {
+          return window.turnstile.getResponse(widgetId());
+        },
+        remove() {
+          window.turnstile.remove(widgetId());
+        },
+        reset() {
+          window.turnstile.reset(widgetId());
+        },
+      });
+    }
+  });
 
   createEffect(
     on(turnStileState, () => {

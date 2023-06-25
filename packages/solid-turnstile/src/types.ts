@@ -52,7 +52,17 @@ export type TurnstileProps = {
      * @link https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/#configurations
      */
     cData?: string
+    /**
+     * 
+     */
+    actions?: (api: TurnstileActions) => void
 } & TurnstileCallbacks;
+
+export type TurnstileActions = {
+    reset(): void;
+    remove(): void;
+    getResponse(): ReturnType<typeof window.turnstile.getResponse>;
+}
 
 export type TurnstileCallbacks = {
     /**
