@@ -76,6 +76,7 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
     "cData",
     "size",
     "language",
+    "iframeTabindex",
   ]);
 
   const cf = mergeProps(
@@ -89,6 +90,7 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
       responseFieldName: "cf-turnstile-response",
       size: "normal" as const,
       language: "auto" as const,
+      iframeTabindex: 0,
     },
     local
   );
@@ -121,6 +123,7 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
       action: cf.action,
       size: cf.size,
       language: cf.language as SupportedLanguages,
+      tabindex: cf.iframeTabindex,
     });
 
     if (!id && cf.onError) {

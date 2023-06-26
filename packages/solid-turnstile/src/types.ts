@@ -66,6 +66,10 @@ export type TurnstileProps = {
      * @default "auto"
      */
     language?: string | "auto"
+    /**
+     * @default 0
+     */
+    iframeTabindex?: number
 } & TurnstileCallbacks;
 
 export type TurnstileActions = {

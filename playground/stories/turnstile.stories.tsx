@@ -57,5 +57,6 @@ export default {
     responseFieldName: "cf-turnstile-response",
     size: "normal",
     language: "auto",
+    iframeTabindex: 0,
   },
 } as Meta<typeof Turnstile>;
