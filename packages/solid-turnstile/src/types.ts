@@ -1,4 +1,5 @@
-import type { JSX } from "solid-js";
+import type { JSX, Setter } from "solid-js";
+import type { WidgetId } from "turnstile-types"
 
 export interface TurnstileProps extends TurnstileCallbacks, Omit<JSX.HTMLAttributes<HTMLDivElement>, "onError"> {
     /**
@@ -57,7 +58,7 @@ export interface TurnstileProps extends TurnstileCallbacks, Omit<JSX.HTMLAttribu
     /**
      * actions is a setter function of a signal that receives an actions object that can manipulate with the widget.
      */
-    actions?: (api: TurnstileActions) => void
+    actions?: Setter<TurnstileActions | undefined>
     /**
      * size controls the size of the visible widget
      * 
@@ -86,11 +87,11 @@ export type TurnstileActions = {
     /**
      * reset calls `window.turnstile.reset` on the widget.
      */
-    reset(): void;
+    reset(): WidgetId | undefined;
     /**
      * remove calls `window.turnstile.remove` on the widget.
      */
-    remove(): void;
+    remove(): WidgetId | undefined;
     /**
      * getResponse calls `window.turnstile.getResponse` on the widget.
      */
@@ -98,7 +99,7 @@ export type TurnstileActions = {
     /**
      * execute calls `window.turnstile.execute` on the widget.
      */
-    execute(): void;
+    execute(): WidgetId | undefined;
 }
 
 export interface TurnstileCallbacks {

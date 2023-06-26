@@ -164,18 +164,26 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
   createEffect(() => {
     if (!props.actions) return;
 
+    const id = widgetId();
+
     props.actions({
       getResponse() {
-        return window.turnstile.getResponse(widgetId());
+        return window.turnstile.getResponse(id);
       },
       remove() {
-        window.turnstile.remove(widgetId());
+        window.turnstile.remove(id);
+
+        return id;
       },
       reset() {
-        window.turnstile.reset(widgetId());
+        window.turnstile.reset(id);
+
+        return id;
       },
       execute() {
-        window.turnstile.execute(widgetId());
+        window.turnstile.execute(id);
+
+        return id;
       },
     });
   });
