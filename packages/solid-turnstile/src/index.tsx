@@ -77,21 +77,23 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
     "size",
     "language",
     "iframeTabindex",
+    "appearance",
   ]);
 
   const cf = mergeProps(
     {
       onLoadCallbackName: "onLoadTurnstileCallback",
       retryInterval: 6000,
-      theme: "auto" as const,
-      retry: "auto" as const,
-      refreshExpired: "auto" as const,
+      theme: "auto",
+      retry: "auto",
+      refreshExpired: "auto",
       responseField: true,
       responseFieldName: "cf-turnstile-response",
-      size: "normal" as const,
-      language: "auto" as const,
+      size: "normal",
+      language: "auto",
       iframeTabindex: 0,
-    },
+      appearance: "always",
+    } as const,
     local
   );
 
@@ -124,6 +126,7 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
       size: cf.size,
       language: cf.language as SupportedLanguages,
       tabindex: cf.iframeTabindex,
+      appearance: cf.appearance,
     });
 
     if (!id && cf.onError) {

@@ -50,6 +50,10 @@ export default {
       ],
       control: { type: "select" },
     },
+    appearance: {
+      options: ["always", "execute", "interaction-only"],
+      control: { type: "radio" },
+    },
   },
   args: {
     siteKey: "1x00000000000000000000AA",
@@ -60,5 +64,6 @@ export default {
     language: "auto",
     iframeTabindex: 0,
     retryInterval: 6000,
+    appearance: "always",
   },
 } as Meta<typeof Turnstile>;
