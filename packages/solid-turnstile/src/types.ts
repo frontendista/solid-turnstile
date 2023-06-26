@@ -76,6 +76,10 @@ export interface TurnstileProps extends TurnstileCallbacks, Omit<JSX.HTMLAttribu
      * @default "always"
      */
     appearance?: "always" | "execute" | "interaction-only"
+    /**
+     * @default "render"
+     */
+    execute?: "render" | "execute"
 };
 
 export type TurnstileActions = {
