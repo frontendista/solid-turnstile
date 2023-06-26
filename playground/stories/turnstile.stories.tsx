@@ -26,11 +26,16 @@ export default {
         arg: "responseField",
       },
     },
+    size: {
+      options: ["normal", "compact"],
+      control: { type: "radio" },
+    },
   },
   args: {
     siteKey: "1x00000000000000000000AA",
     theme: "auto",
     responseField: true,
     responseFieldName: "cf-turnstile-response",
+    size: "normal",
   },
 } as Meta<typeof Turnstile>;

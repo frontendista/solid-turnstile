@@ -53,9 +53,15 @@ export type TurnstileProps = {
      */
     cData?: string
     /**
-     * 
+     * actions is a setter function of a signal that receives an actions object that can manipulate with the widget.
      */
     actions?: (api: TurnstileActions) => void
+    /**
+     * size controls the size of the visible widget
+     * 
+     * @default "normal"
+     */
+    size?: "normal" | "compact"
 } & TurnstileCallbacks;
 
 export type TurnstileActions = {

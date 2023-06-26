@@ -74,6 +74,7 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
     "theme",
     "action",
     "cData",
+    "size",
   ]);
 
   const cf = mergeProps(
@@ -85,6 +86,7 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
       refreshExpired: "auto" as const,
       responseField: true,
       responseFieldName: "cf-turnstile-response",
+      size: "normal" as const,
     },
     local
   );
@@ -115,6 +117,7 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
       theme: cf.theme,
       cData: cf.cData,
       action: cf.action,
+      size: cf.size,
     });
 
     if (!id && cf.onError) {
