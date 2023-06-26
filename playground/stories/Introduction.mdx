@@ -1,5 +1,30 @@
-import { Meta } from '@storybook/blocks';
+import { Meta } from "@storybook/blocks";
 
 <Meta title="Introduction" />
 
 # @frontendista/solid-turnstile
+
+## 1. Getting started
+
+`@frontendista/solid-turnstile` is a [SolidJS](https://www.solidjs.com) component for rendering [Cloudflare's Turnstile](https://www.cloudflare.com/products/turnstile) widget.
+
+## 1.1 Installation
+
+```sh
+pnpm add @frontendista/solid-turnstile
+```
+
+## 1.2 Usage
+
+```tsx
+const ContactForm = () => {
+    return (
+        <form action="/message">
+            <Turnstile siteKey={<YOUR_SITEKEY>} />
+            <button type="submit">Submit</button>
+        </form>
+    )
+}
+```
+
+## 1.3 Props

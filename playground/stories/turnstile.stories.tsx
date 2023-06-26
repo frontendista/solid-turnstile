@@ -1,9 +1,10 @@
+import { createSignal } from "solid-js";
 import { Turnstile } from "@frontendista/solid-turnstile/src";
+
 import { FixedSizeDecorator } from "../src/decorators/decorator";
 
 import type { Meta, StoryObj } from "storybook-solidjs";
-import { createSignal } from "solid-js";
-import { TurnstileActions } from "@frontendista/solid-turnstile/src/types";
+import type { TurnstileActions } from "@frontendista/solid-turnstile/src/types";
 
 type Story = StoryObj<typeof Turnstile>;
 
