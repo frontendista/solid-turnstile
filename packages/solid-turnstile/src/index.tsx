@@ -22,6 +22,11 @@ const [turnStileState, setState] = createSignal<
 function injectScript(callback: string) {
   const turnstile = document.getElementById("cf-turnstile");
 
+  if (window.turnstile) {
+    setState("loaded");
+    return;
+  }
+
   if (turnstile) return;
 
   setState("loading");
@@ -86,34 +91,38 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
 
   onMount(() => injectScript(cf.onLoadCallbackName));
 
-  const widgetId = createMemo(
-    on([ref, turnStileState], ([element]) => {
-      if (typeof window === "undefined" || !window.turnstile || !element)
-        return;
+  const widgetId = createMemo(() => {
+    const element = ref();
 
-      const id = window.turnstile.render(element, {
-        sitekey: cf.siteKey,
-        callback: cf.onSuccess,
-        retry: "never",
-        "error-callback": onErrorCallback,
-        "expired-callback": cf.onExpire,
-        "timeout-callback": cf.onTimeout,
-        "retry-interval": cf.retryInterval,
-        "refresh-expired": cf.refreshExpired,
-        "response-field": cf.responseField,
-        "response-field-name": cf.responseFieldName,
-        theme: cf.theme,
-        cData: cf.cData,
-        action: cf.action,
-      });
+    if (
+      typeof window === "undefined" ||
+      turnStileState() !== "loaded" ||
+      !element
+    )
+      return;
 
-      if (!id && cf.onError) {
-        cf.onError();
-      }
+    const id = window.turnstile.render(element, {
+      sitekey: cf.siteKey,
+      callback: cf.onSuccess,
+      retry: "never",
+      "error-callback": onErrorCallback,
+      "expired-callback": cf.onExpire,
+      "timeout-callback": cf.onTimeout,
+      "retry-interval": cf.retryInterval,
+      "refresh-expired": cf.refreshExpired,
+      "response-field": cf.responseField,
+      "response-field-name": cf.responseFieldName,
+      theme: cf.theme,
+      cData: cf.cData,
+      action: cf.action,
+    });
 
-      return id;
-    })
-  );
+    if (!id && cf.onError) {
+      cf.onError();
+    }
+
+    return id;
+  });
 
   const onErrorCallback = () => {
     // NOTE: This is a fix until automatic retry is fixed.

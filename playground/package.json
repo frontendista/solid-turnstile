@@ -4,6 +4,9 @@
     "dev": "storybook dev -p 6006",
     "build": "storybook build"
   },
+  "dependencies": {
+    "@frontendista/solid-turnstile": "workspace:^"
+  },
   "devDependencies": {
     "@storybook/addon-essentials": "7.0.23",
     "@storybook/addon-interactions": "7.0.23",
@@ -12,12 +15,10 @@
     "@storybook/testing-library": "0.0.14-next.2",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "solid-js": "^1.7.6",
     "storybook": "7.0.23",
     "storybook-solidjs": "1.0.0-beta.2",
     "storybook-solidjs-vite": "1.0.0-beta.2"
   },
-  "license": "MIT",
-  "dependencies": {
-    "@frontendista/solid-turnstile": "workspace:^"
-  }
+  "license": "MIT"
 }
