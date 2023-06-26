@@ -171,6 +171,9 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
       reset() {
         window.turnstile.reset(widgetId());
       },
+      execute() {
+        window.turnstile.execute(widgetId());
+      },
     });
   });
 

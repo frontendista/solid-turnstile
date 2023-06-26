@@ -91,6 +91,10 @@ export type TurnstileActions = {
      * getResponse calls `window.turnstile.getResponse` on the widget.
      */
     getResponse(): ReturnType<typeof window.turnstile.getResponse>;
+    /**
+     * execute calls `window.turnstile.execute` on the widget.
+     */
+    execute(): void;
 }
 
 export interface TurnstileCallbacks {
