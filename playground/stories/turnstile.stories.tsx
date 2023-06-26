@@ -30,6 +30,25 @@ export default {
       options: ["normal", "compact"],
       control: { type: "radio" },
     },
+    language: {
+      options: [
+        "auto",
+        "de",
+        "en",
+        "es",
+        "fa",
+        "fr",
+        "id",
+        "it",
+        "ja",
+        "ko",
+        "nl",
+        "pl",
+        "ru",
+        "tr",
+      ],
+      control: { type: "select" },
+    },
   },
   args: {
     siteKey: "1x00000000000000000000AA",
@@ -37,5 +56,6 @@ export default {
     responseField: true,
     responseFieldName: "cf-turnstile-response",
     size: "normal",
+    language: "auto",
   },
 } as Meta<typeof Turnstile>;

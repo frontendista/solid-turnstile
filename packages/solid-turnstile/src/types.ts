@@ -62,6 +62,10 @@ export type TurnstileProps = {
      * @default "normal"
      */
     size?: "normal" | "compact"
+    /**
+     * @default "auto"
+     */
+    language?: string | "auto"
 } & TurnstileCallbacks;
 
 export type TurnstileActions = {

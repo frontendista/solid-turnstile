@@ -3,7 +3,6 @@ import {
   createMemo,
   createSignal,
   mergeProps,
-  on,
   onCleanup,
   onMount,
   Show,
@@ -12,6 +11,7 @@ import {
 } from "solid-js";
 
 import type { TurnstileProps } from "./types";
+import { SupportedLanguages } from "turnstile-types";
 
 const TURNSTILE_URL = "https://challenges.cloudflare.com/turnstile/v0/api.js";
 
@@ -75,6 +75,7 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
     "action",
     "cData",
     "size",
+    "language",
   ]);
 
   const cf = mergeProps(
@@ -87,6 +88,7 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
       responseField: true,
       responseFieldName: "cf-turnstile-response",
       size: "normal" as const,
+      language: "auto" as const,
     },
     local
   );
@@ -118,6 +120,7 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
       cData: cf.cData,
       action: cf.action,
       size: cf.size,
+      language: cf.language as SupportedLanguages,
     });
 
     if (!id && cf.onError) {
