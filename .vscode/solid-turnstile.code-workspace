@@ -2,11 +2,15 @@
 	"folders": [
 		{
 			"name": "✨ root",
-			"path": "../"
+			"path": ".."
 		},
 		{
 			"name": "📦 @frontendista/solid-turnstile",
 			"path": "../packages/solid-turnstile"
+		},
+		{
+			"name": "🚀 playground",
+			"path": "../playground"
 		}
 	],
 	"settings": {}

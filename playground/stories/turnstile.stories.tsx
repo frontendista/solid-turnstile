@@ -6,7 +6,7 @@ type Story = StoryObj<typeof Turnstile>;
 export const Default: Story = {};
 
 export default {
-  title: "Turnstile",
+  title: "Playground/Turnstile",
   component: Turnstile,
   tags: ["autodocs"],
   argTypes: {
@@ -14,6 +14,7 @@ export default {
       options: {
         Passes: "1x00000000000000000000AA",
         Fails: "2x00000000000000000000AB",
+        Challenge: "3x00000000000000000000FF",
       },
       control: { type: "select" },
     },
@@ -58,5 +59,6 @@ export default {
     size: "normal",
     language: "auto",
     iframeTabindex: 0,
+    retryInterval: 6000,
   },
 } as Meta<typeof Turnstile>;

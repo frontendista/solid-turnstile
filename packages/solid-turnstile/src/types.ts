@@ -1,4 +1,6 @@
-export type TurnstileProps = {
+import type { JSX } from "solid-js";
+
+export interface TurnstileProps extends TurnstileCallbacks, Omit<JSX.HTMLAttributes<HTMLDivElement>, "onError"> {
     /**
      * Your Cloudflare Turnstile widget site key.
      * 
@@ -70,20 +72,28 @@ export type TurnstileProps = {
      * @default 0
      */
     iframeTabindex?: number
-} & TurnstileCallbacks;
+};
 
 export type TurnstileActions = {
+    /**
+     * reset calls `window.turnstile.reset` on the widget.
+     */
     reset(): void;
+    /**
+     * remove calls `window.turnstile.remove` on the widget.
+     */
     remove(): void;
+    /**
+     * getResponse calls `window.turnstile.getResponse` on the widget.
+     */
     getResponse(): ReturnType<typeof window.turnstile.getResponse>;
 }
 
-export type TurnstileCallbacks = {
+export interface TurnstileCallbacks {
     /**
      * onSuccess is called when the challenge is successfully solved.
      * 
      * @param token The token to be validated on the server.
-     * @returns 
      */
     onSuccess?: (token: string) => void;
     /**

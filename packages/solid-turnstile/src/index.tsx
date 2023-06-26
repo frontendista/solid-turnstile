@@ -10,8 +10,8 @@ import {
   type VoidComponent,
 } from "solid-js";
 
+import type { SupportedLanguages } from "turnstile-types";
 import type { TurnstileProps } from "./types";
-import { SupportedLanguages } from "turnstile-types";
 
 const TURNSTILE_URL = "https://challenges.cloudflare.com/turnstile/v0/api.js";
 
@@ -173,7 +173,7 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
 
   return (
     <Show when={turnStileState() === "loaded"}>
-      <div ref={setRef} />
+      <div ref={setRef} {...attributes} />
     </Show>
   );
 };
