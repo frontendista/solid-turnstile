@@ -16,48 +16,71 @@ export default {
   tags: ["autodocs"],
   render: (args) => {
     const [actions, setActions] = createSignal<TurnstileActions>();
+    const [state, setState] = createSignal<string>("Unknown");
 
     return (
       <div>
-        <Turnstile {...args} actions={setActions} />
+        <Turnstile
+          onSuccess={() => {
+            console.log("Success");
+            setState("success");
+          }}
+          onError={() => {
+            console.log("Error");
+            setState("error");
+          }}
+          onExpire={() => {
+            console.log("Expire");
+            setState("expire");
+          }}
+          onTimeout={() => {
+            console.log("Timeout");
+            setState("timeout");
+          }}
+          {...args}
+          actions={setActions}
+        />
         <div>
-          <button
-            onClick={() =>
-              console.log(
-                `Called remove on widget with id: "${actions()?.remove()}"`
-              )
-            }
-          >
-            remove
-          </button>
-          <button
-            onClick={() =>
-              console.log(
-                `Called reset on widget with id: "${actions()?.reset()}"`
-              )
-            }
-          >
-            reset
-          </button>
-          <button
-            onClick={() => {
-              alert(actions()?.getResponse());
-            }}
-          >
-            getResponse
-          </button>
-          <button
-            onClick={() =>
-              console.log(
-                `Called execute on widget with id: "${actions()?.execute()}"`
-              )
-            }
-            disabled={
-              args.execute !== "execute" && args.appearance !== "execute"
-            }
-          >
-            execute
-          </button>
+          <span>State: {state()}</span>
+          <div>
+            <button
+              onClick={() =>
+                console.log(
+                  `Called remove on widget with id: "${actions()?.remove()}"`
+                )
+              }
+            >
+              remove
+            </button>
+            <button
+              onClick={() =>
+                console.log(
+                  `Called reset on widget with id: "${actions()?.reset()}"`
+                )
+              }
+            >
+              reset
+            </button>
+            <button
+              onClick={() => {
+                alert(actions()?.getResponse());
+              }}
+            >
+              getResponse
+            </button>
+            <button
+              onClick={() =>
+                console.log(
+                  `Called execute on widget with id: "${actions()?.execute()}"`
+                )
+              }
+              disabled={
+                args.execute !== "execute" && args.appearance !== "execute"
+              }
+            >
+              execute
+            </button>
+          </div>
         </div>
       </div>
     );
@@ -69,6 +92,8 @@ export default {
         Passes: "1x00000000000000000000AA",
         Fails: "2x00000000000000000000AB",
         Challenge: "3x00000000000000000000FF",
+        InvisiblePasses: "1x00000000000000000000BB",
+        InvisibleFails: "2x00000000000000000000BB",
       },
       control: { type: "select" },
     },

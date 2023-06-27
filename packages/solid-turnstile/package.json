@@ -3,11 +3,26 @@
   "version": "0.0.1",
   "description": "SolidJS component for rendering Cloudflare's turnstile widget",
   "scripts": {
-    "build": "vite build"
+    "build": "rollup -c ./rollup.config.js"
   },
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
-  "types": "dist/index.d.ts",
+  "type": "module",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/esm/index.js",
+  "types": "./dist/types/index.d.ts",
+  "source": "./src/index.tsx",
+  "exports": {
+    ".": {
+      "solid": "./dist/source/index.jsx",
+      "types": "./dist/types/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js",
+      "node": "./dist/cjs/index.js",
+      "browser": {
+        "import": "./dist/esm/index.js",
+        "require": "./dist/cjs/index.js"
+      }
+    }
+  },
   "files": [
     "dist"
   ],
@@ -15,11 +30,10 @@
     "solid-js": "^1.7.6"
   },
   "devDependencies": {
+    "rollup": "^3.25.3",
+    "rollup-preset-solid": "^2.0.1",
     "solid-js": "^1.7.6",
-    "turnstile-types": "^1.1.2",
-    "vite": "^4.3.9",
-    "vite-plugin-dts": "2.3.0",
-    "vite-plugin-solid": "^2.7.0"
+    "turnstile-types": "^1.1.2"
   },
   "author": {
     "email": "me@frontendista.cz",
