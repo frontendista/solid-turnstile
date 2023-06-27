@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "description": "SolidJS component for rendering Cloudflare's turnstile widget",
   "scripts": {
-    "build": "rollup -c ./rollup.config.js"
+    "build": "rollup -c ./rollup.config.js",
+    "prepack": "pnpm build"
   },
   "type": "module",
   "main": "./dist/cjs/index.js",

@@ -11,7 +11,7 @@ import {
 } from "solid-js";
 
 import type { SupportedLanguages } from "turnstile-types";
-import type { TurnstileProps } from "./types";
+import type { TurnstileProps, TurnstileScriptOptions } from "./types";
 
 const TURNSTILE_URL = "https://challenges.cloudflare.com/turnstile/v0/api.js";
 
@@ -19,8 +19,9 @@ const [turnStileState, setState] = createSignal<
   "loading" | "loaded" | "error" | "none"
 >("none");
 
-function injectScript(callback: string) {
-  const turnstile = document.getElementById("cf-turnstile");
+function injectScript(callback: string, scriptOptions: TurnstileScriptOptions) {
+  const id = scriptOptions.id ?? "cf-turnstile";
+  const turnstile = document.getElementById(id);
 
   if (window.turnstile) {
     setState("loaded");
@@ -35,7 +36,7 @@ function injectScript(callback: string) {
   script.src = `${TURNSTILE_URL}?onload=${callback}&render=explicit`;
   script.async = true;
   script.defer = true;
-  script.id = "cf-turnstile";
+  script.id = id;
 
   // @ts-expect-error
   window[callback] = () => {
@@ -47,7 +48,7 @@ function injectScript(callback: string) {
 
   script.onerror = () => setState("error");
 
-  document.body.appendChild(script);
+  (scriptOptions.mount || document.head).appendChild(script);
 }
 
 /**
@@ -59,27 +60,31 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
   let [retryId, setRetryId] = createSignal<number | undefined>();
   let [ref, setRef] = createSignal<HTMLDivElement>();
 
-  const [local, attributes] = splitProps(props, [
-    "siteKey",
-    "onLoadCallbackName",
-    "onSuccess",
-    "onError",
-    "onExpire",
-    "retry",
-    "retryInterval",
-    "refreshExpired",
-    "responseField",
-    "responseFieldName",
-    "onTimeout",
-    "theme",
-    "action",
-    "cData",
-    "size",
-    "language",
-    "iframeTabindex",
-    "appearance",
-    "execute",
-  ]);
+  const [local, { scriptOptions }, attributes] = splitProps(
+    props,
+    [
+      "siteKey",
+      "onLoadCallbackName",
+      "onSuccess",
+      "onError",
+      "onExpire",
+      "retry",
+      "retryInterval",
+      "refreshExpired",
+      "responseField",
+      "responseFieldName",
+      "onTimeout",
+      "theme",
+      "action",
+      "cData",
+      "size",
+      "language",
+      "iframeTabindex",
+      "appearance",
+      "execute",
+    ],
+    ["scriptOptions"]
+  );
 
   const cf = mergeProps(
     {
@@ -99,7 +104,7 @@ export const Turnstile: VoidComponent<TurnstileProps> = (props) => {
     local
   );
 
-  onMount(() => injectScript(cf.onLoadCallbackName));
+  onMount(() => injectScript(cf.onLoadCallbackName, scriptOptions || {}));
 
   const widgetId = createMemo(() => {
     const element = ref();

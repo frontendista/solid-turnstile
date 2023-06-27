@@ -80,7 +80,23 @@ export interface TurnstileProps extends TurnstileCallbacks, Omit<JSX.HTMLAttribu
      * @default "render"
      */
     execute?: "render" | "execute"
+    scriptOptions?: TurnstileScriptOptions
 };
+
+export type TurnstileScriptOptions = {
+    /**
+     * mount controls where the script should be mounted in the DOM.
+     * 
+     * @default document.head
+     */
+    mount?: HTMLElement;
+    /**
+     * id controls the id of the script element.'
+     * 
+     * @default "cf-turnstile"
+     */
+    id?: string;
+}
 
 export type TurnstileActions = {
     /**
