@@ -13,7 +13,7 @@ export default defineConfig({
             formats: ["es", "cjs"],
         },
         rollupOptions: {
-            external: ["solid-js"],
+            external: ["solid-js", "solid-js/web", "solid-js/store"],
         },
     },
 });

@@ -1,5 +1,4 @@
 import type { JSX, Setter } from "solid-js";
-import type { WidgetId } from "turnstile-types"
 
 export interface TurnstileProps extends TurnstileCallbacks, Omit<JSX.HTMLAttributes<HTMLDivElement>, "onError"> {
     /**
@@ -87,11 +86,11 @@ export type TurnstileActions = {
     /**
      * reset calls `window.turnstile.reset` on the widget.
      */
-    reset(): WidgetId | undefined;
+    reset(): string | undefined;
     /**
      * remove calls `window.turnstile.remove` on the widget.
      */
-    remove(): WidgetId | undefined;
+    remove(): string | undefined;
     /**
      * getResponse calls `window.turnstile.getResponse` on the widget.
      */
@@ -99,7 +98,7 @@ export type TurnstileActions = {
     /**
      * execute calls `window.turnstile.execute` on the widget.
      */
-    execute(): WidgetId | undefined;
+    execute(): string | undefined;
 }
 
 export interface TurnstileCallbacks {
